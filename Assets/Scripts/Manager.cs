@@ -36,15 +36,26 @@ public class Manager : MonoBehaviour
                 scalers[j].bias = Mathf.Lerp(minBias, maxBias, (float)(j + 1) / scalers.Count);
             }
         }
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Vector3 pos = new Vector3(Mathf.Sin(angle) * raio + offSet.x, Mathf.Cos(angle) * raio + offSet.y, 0f);
+            parent.GetChild(i).gameObject.GetComponent<Raio>().angle = angle;
+            parent.GetChild(i).gameObject.GetComponent<Raio>().offSet = offSet;
+            parent.GetChild(i).gameObject.transform.eulerAngles = new Vector3(0f, 0f, -angle * Mathf.Rad2Deg);
+            angle += angleAdd;
+        }
+
+        angle = 0f;
     }
 
     private void Update()
     {
         for (int i = 0; i < parent.childCount; i++)
         {
-            Vector3 pos = new Vector3(Mathf.Sin(angle) * raio + offSet.x, Mathf.Cos(angle) * raio + offSet.y, 0f);
-            parent.GetChild(i).gameObject.transform.position = pos;
-            parent.GetChild(i).gameObject.transform.eulerAngles = new Vector3(0f, 0f, -angle * Mathf.Rad2Deg);
+            //Vector3 pos = new Vector3(Mathf.Sin(angle) * raio + offSet.x, Mathf.Cos(angle) * raio + offSet.y, 0f);
+            parent.GetChild(i).gameObject.GetComponent<Raio>().angle = angle;
+            //parent.GetChild(i).gameObject.GetComponent<Raio>().offSet = offSet;
+            //parent.GetChild(i).gameObject.transform.eulerAngles = new Vector3(0f, 0f, -angle * Mathf.Rad2Deg);
             angle += angleAdd;
         }
 
